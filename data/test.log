@@ -1,16 +1,4 @@
-/*C1*/SET SCHEMA SYSTEM_LOBS
-INSERT INTO BLOCKS VALUES(0,2147483647,0)
-COMMIT
-/*C3*/SET SCHEMA PUBLIC
-create sequence Department_SEQ start with 1 increment by 50
-create sequence Employee_SEQ start with 1 increment by 50
-create table Department (id bigint not null, name varchar(255), primary key (id))
-create table Employee (department_id bigint, id bigint not null, name varchar(255), primary key (id))
-alter table Employee add constraint FK14tijxqry9ml17nk86sqfp561 foreign key (department_id) references Department
-INSERT INTO DEPARTMENT VALUES(1,'java')
-INSERT INTO EMPLOYEE VALUES(1,1,'Jakab Gipsz')
-INSERT INTO EMPLOYEE VALUES(1,2,'Captain Nemo')
-ALTER SEQUENCE PUBLIC.DEPARTMENT_SEQ RESTART WITH 51
-ALTER SEQUENCE PUBLIC.EMPLOYEE_SEQ RESTART WITH 101
-COMMIT
+/*C6*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C7*/SET SCHEMA PUBLIC
 DISCONNECT
