@@ -1,5 +1,8 @@
 package models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
 /**
@@ -10,6 +13,7 @@ import jakarta.persistence.MappedSuperclass;
  * par les autres classes d'entités.
  */
 //@MappedSuperclass
+@Entity
 public class Personne {
 
     /**
@@ -22,6 +26,9 @@ public class Personne {
      */
     private String prenom;
 
+    private Long id;
+    private String email;
+
     /**
      * Constructeur de la classe Personne pour initialiser les attributs nom et prénom.
      *
@@ -30,9 +37,16 @@ public class Personne {
      */
 
     //public Personne(){}
-    public Personne(String nom, String prenom) {
+    public Personne(String nom, String prenom, String email) {
         this.nom = nom;
         this.prenom = prenom;
+        this.email = email;
+    }
+
+    @Id
+    @GeneratedValue
+    public Long getId() {
+        return id;
     }
 
     /**
@@ -69,5 +83,17 @@ public class Personne {
      */
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
