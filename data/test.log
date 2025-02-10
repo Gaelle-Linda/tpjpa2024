@@ -4,16 +4,12 @@ COMMIT
 /*C2*/SET SCHEMA PUBLIC
 create sequence Artiste_SEQ start with 1 increment by 50
 create sequence Concert_SEQ start with 1 increment by 50
-create sequence Department_SEQ start with 1 increment by 50
-create sequence Employee_SEQ start with 1 increment by 50
 create sequence Personne_SEQ start with 1 increment by 50
 create sequence Salle_SEQ start with 1 increment by 50
 create sequence Ticket_SEQ start with 1 increment by 50
 create table Artiste (id bigint not null, genreMusical varchar(255), nomArtistique varchar(255), primary key (id))
 create table Concert (date date, heureDebut time(6), heureFin time(6), nombrePlaces integer, id bigint not null, organisateur_id bigint, salle_id bigint, description varchar(255), genreMusical varchar(255), primary key (id))
 create table Concert_Artiste (artistes_id bigint not null, concerts_id bigint not null)
-create table Department (id bigint not null, name varchar(255), primary key (id))
-create table Employee (department_id bigint, id bigint not null, name varchar(255), primary key (id))
 create table Personne (id bigint not null, DTYPE varchar(31) not null, email varchar(255), nom varchar(255), prenom varchar(255), primary key (id))
 create table Salle (nombrePlacesMax integer, id bigint not null, description varchar(255), primary key (id))
 create table Ticket (client_id bigint, concert_id bigint, id bigint not null, description varchar(255), primary key (id))
@@ -21,7 +17,6 @@ alter table Concert add constraint FK7yj7xusinidc0fiar2yv22gp7 foreign key (orga
 alter table Concert add constraint FKl4vnclyt7ut95sh9bac1f4ogy foreign key (salle_id) references Salle
 alter table Concert_Artiste add constraint FKofkfi6d10awtwrpci7y3ssr5w foreign key (artistes_id) references Artiste
 alter table Concert_Artiste add constraint FK2w1nh578npyr2ug911nupnjmx foreign key (concerts_id) references Concert
-alter table Employee add constraint FK14tijxqry9ml17nk86sqfp561 foreign key (department_id) references Department
 alter table Ticket add constraint FKfv706x6euvdm48h6bo78pju3x foreign key (client_id) references Personne
 alter table Ticket add constraint FKin9kj2wiejns9ptuw1pt351kg foreign key (concert_id) references Concert
 INSERT INTO PERSONNE VALUES(1,'Client','jean.dupont@example.com','Dupont','Jean')
