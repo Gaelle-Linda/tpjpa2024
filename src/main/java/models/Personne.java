@@ -12,7 +12,8 @@ import jakarta.persistence.MappedSuperclass;
  * en tant qu'entité dans la base de données, mais ses attributs seront hérités
  * par les autres classes d'entités.
  */
-//@MappedSuperclass
+//@MappedSuperclass / ne permettrait pas de persister Personne elle-même mais de l'hériter dans d'autres entités.
+
 @Entity
 public class Personne {
 
@@ -36,7 +37,11 @@ public class Personne {
      * @param prenom Le prénom de la personne.
      */
 
-    //public Personne(){}
+    public Personne(){}
+    /**Constructeur sans argument : Il est souvent utile d'avoir un constructeur sans argument
+     * pour JPA, si jamais tu utilises des frameworks comme Hibernate qui créent des instances par
+     réflexion
+     */
     public Personne(String nom, String prenom, String email) {
         this.nom = nom;
         this.prenom = prenom;
