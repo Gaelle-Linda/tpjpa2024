@@ -6,9 +6,14 @@ import jakarta.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Client extends Personne implements Serializable {
     private List<Ticket> tickets;
+
+    // Constructeur sans argument requis par Hibernate
+    public Client() {}
 
     public Client(String nom, String prenom, String email) {
 
@@ -16,6 +21,7 @@ public class Client extends Personne implements Serializable {
     }
 
     @OneToMany(mappedBy = "client")
+    @JsonManagedReference
     public List<Ticket> getTickets() {
         return tickets;
     }

@@ -15,7 +15,7 @@ public class ArtisteResource {//ArtisteRessource est un ensemble de routes(URL p
 
 
 
-  @GET //pour demander une ressource Méthode
+  @GET //pour demander une ressource Méthode: retourne un artiste avec un ID donné
   @Path("/{ArtisteId}") // (localhost:8080/artiste/identifiant) on se positionne sur l'instance au travers de son identifiant; "/{ArtisteId}" accolardes pour dire que l'identifiant peut varier en fonction de la demande de l'utilisateur
   public Artiste getArtisteById(@PathParam("ArtisteId") Long ArtisteId)  {//pour récupérer la valeur insérer dans la partie dynamique de l'URL :  @Path("/{ArtisteId}/{id}") =>  public Artiste getArtisteById(@PathParam("ArtisteId") Long ArtisteId, @PathParam("id") long id)
       // return artiste
@@ -25,7 +25,7 @@ public class ArtisteResource {//ArtisteRessource est un ensemble de routes(URL p
   }
 
   //On peut vouloir vérifier que la route (localhost:8080/artiste/) vers la ressource est bien accessible via l'URL ou alors parfois pour certains c'est pouvoir afficher la liste des artistes
-  //Le code ci-dessous marche mais comme il a la meme route @Path("/") que celui que la fonction listArtiste qui affiche la liste des artiste sinon le serveur considerera la première fonction par défaut
+  //Le code ci-dessous marche mais comme il a la meme route @Path("/") que celui que la fonction listArtiste qui affiche la liste des artiste, On le met en commentaire sinon le serveur considerera la première fonction par défaut
   /*@GET
   @Path("/")//
   public Artiste getArtiste()  {
@@ -49,7 +49,7 @@ public class ArtisteResource {//ArtisteRessource est un ensemble de routes(URL p
 
   // git commit -m "Impléméntation des méthodes UPDATE et DELETE àpartir d'un id
 
-  @GET //pour demander une ressource Méthode
+  @GET //pour demander une ressource Méthode: On veut retourner la liste des artistes
   @Path("/") // (localhost:8080/artiste/) on se positionne sur l'instance sans précision d'un identifiant particulier identifiant;
   public List<Artiste> listeArtistes()  {//Il nya pas de valeur à récupérer ici la valeur
     // return la liste des artistes
@@ -58,7 +58,8 @@ public class ArtisteResource {//ArtisteRessource est un ensemble de routes(URL p
   }
 
 
-  //Méthode UPDATE - Modifie les attributs d'un artiste s'il existe, il faut le paramètres ID dans la partie dynamique de l'URL  et Les nouvelles valeurs (nomArtistique, genreMusical) sont dans le corps de la requête (body), en format JSON
+  //Méthode UPDATE - Modifie les attributs d'un artiste s'il existe, il faut le paramètres ID dans la partie 
+  //dynamique de l'URL  et Les nouvelles valeurs (nomArtistique, genreMusical) sont dans le corps de la requête (body), en format JSON
   //la fonction updateArtisteByID recupère l'id de l'artiste et un nouvel artiste au format JSON
   @PUT //Pour soumetre des données aux serveur pour traitement ou pour sauvegarde dans la BD
   @Consumes("application/json") //Consomme des données sous format json uniquement

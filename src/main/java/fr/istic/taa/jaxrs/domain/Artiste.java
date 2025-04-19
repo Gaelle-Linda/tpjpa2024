@@ -8,7 +8,11 @@ import jakarta.persistence.ManyToMany;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Artiste implements Serializable {
     private Long id;
     private String nomArtistique;

@@ -7,6 +7,9 @@ import jakarta.persistence.ManyToOne;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Ticket implements Serializable {
     private Long id;
@@ -39,6 +42,7 @@ public class Ticket implements Serializable {
     }
 
     @ManyToOne
+    @JsonBackReference
     public Client getClient() {
         return client;
     }
@@ -48,6 +52,7 @@ public class Ticket implements Serializable {
     }
 
     @ManyToOne
+    //@JsonBackReference
     public Concert getConcert() {
         return concert;
     }

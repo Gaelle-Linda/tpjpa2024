@@ -1,30 +1,61 @@
 package fr.istic.taa.jaxrs.domain;
 
 import jakarta.persistence.*;
-
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Concert implements Serializable {
 
+    // Identifiant unique du concert
     private Long id;
+
+    // Description du concert
     private String description;
+
+    // Genre musical (ex : Jazz, Rock, Classique…)
     private String genreMusical;
-    private LocalDate date;          // Date du concert
-    private LocalTime heureDebut;    // Heure de début du concert
-    private LocalTime heureFin;      // Heure de fin du concert
+
+    // Date du concert (jour uniquement)
+    @Temporal(TemporalType.DATE)
+    private Date date;
+
+    // Heure de début du concert
+    @Temporal(TemporalType.TIME)
+    private Date heureDebut;
+
+    // Heure de fin du concert
+    @Temporal(TemporalType.TIME)
+    private Date heureFin;
+
+    // Nombre de places disponibles
     private Integer nombrePlaces;
+
+    // Organisateur du concert
     private Organisateur organisateur;
+
+    // Salle où se déroule le concert
     private Salle salle;
+
+    // Liste des tickets associés
+    @JsonManagedReference
     private List<Ticket> tickets;
+
+    // Liste des artistes participants
     private List<Artiste> artistes;
 
+    // Constructeur par défaut (requis par JPA)
     public Concert() {}
 
-    public Concert(String description, String genreMusical, LocalDate date, LocalTime heureDebut, LocalTime heureFin, Integer nombrePlaces) {
+    // Constructeur avec tous les paramètres importants
+    public Concert(String description, String genreMusical, Date date, Date heureDebut, Date heureFin, Integer nombrePlaces) {
         this.description = description;
         this.genreMusical = genreMusical;
         this.date = date;
@@ -59,27 +90,30 @@ public class Concert implements Serializable {
         this.genreMusical = genreMusical;
     }
 
-    public LocalDate getDate() {
+    // Date du concert (jour uniquement)
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public LocalTime getHeureDebut() {
+    // Heure de début du concert
+    public Date getHeureDebut() {
         return heureDebut;
     }
 
-    public void setHeureDebut(LocalTime heureDebut) {
+    public void setHeureDebut(Date heureDebut) {
         this.heureDebut = heureDebut;
     }
 
-    public LocalTime getHeureFin() {
+    // Heure de fin du concert
+    public Date getHeureFin() {
         return heureFin;
     }
 
-    public void setHeureFin(LocalTime heureFin) {
+    public void setHeureFin(Date heureFin) {
         this.heureFin = heureFin;
     }
 
@@ -91,7 +125,9 @@ public class Concert implements Serializable {
         this.nombrePlaces = nombrePlaces;
     }
 
+    // Plusieurs concerts peuvent être organisés par un même organisateur
     @ManyToOne
+    @JsonBackReference // Évite la sérialisation de l'organisateur pour prévenir la récursion infinie
     public Organisateur getOrganisateur() {
         return organisateur;
     }
@@ -100,16 +136,21 @@ public class Concert implements Serializable {
         this.organisateur = organisateur;
     }
 
+    // Plusieurs concerts peuvent avoir lieu dans la même salle
     @ManyToOne
+    @JsonBackReference
     public Salle getSalle() {
         return salle;
     }
+    
 
     public void setSalle(Salle salle) {
         this.salle = salle;
     }
 
+    // Un concert peut avoir plusieurs tickets
     @OneToMany(mappedBy = "concert")
+    @JsonManagedReference
     public List<Ticket> getTickets() {
         return tickets;
     }
@@ -118,6 +159,7 @@ public class Concert implements Serializable {
         this.tickets = tickets;
     }
 
+    // Un concert peut accueillir plusieurs artistes
     @ManyToMany
     public List<Artiste> getArtistes() {
         return artistes;

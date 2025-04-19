@@ -8,11 +8,15 @@ import jakarta.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Salle implements Serializable {
     private Long id;
     private String description;
     private Integer nombrePlacesMax;
+
+    
     private List<Concert> concerts;
 
     public Salle() {}
@@ -48,7 +52,9 @@ public class Salle implements Serializable {
         this.nombrePlacesMax = nombrePlacesMax;
     }
 
+    
     @OneToMany(mappedBy = "salle")
+    @JsonManagedReference
     public List<Concert> getConcerts() {
         return concerts;
     }
