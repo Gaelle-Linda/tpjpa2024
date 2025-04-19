@@ -43,7 +43,6 @@ public class Artiste implements Serializable {
     public String getGenreMusical() {
         return genreMusical;
     }
-
     public void setGenreMusical(String genreMusical) {
         this.genreMusical = genreMusical;
     }
