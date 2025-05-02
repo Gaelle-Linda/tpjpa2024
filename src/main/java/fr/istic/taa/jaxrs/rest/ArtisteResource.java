@@ -3,11 +3,13 @@ package fr.istic.taa.jaxrs.rest;
 import fr.istic.taa.jaxrs.dao.ArtisteDao;
 import fr.istic.taa.jaxrs.domain.Artiste;
 import fr.istic.taa.jaxrs.domain.Pet;
+import fr.istic.taa.jaxrs.dto.ArtisteDto;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("artiste") // (localhost:8080/artiste)Route par défaut pour se positionner sur la ressource artiste
 @Produces({"application/json", "application/xml"})//Les données peuvent être renvoyées sous formats json ou xml
@@ -56,6 +58,19 @@ public class ArtisteResource {//ArtisteRessource est un ensemble de routes(URL p
     ArtisteDao artisteDAo = new ArtisteDao();
     return artisteDAo.findAll();
   }
+
+
+
+  @GET //pour demander une ressource Méthode: On veut retourner la liste des artistes
+  @Path("/dto") // (localhost:8080/artiste/) on se positionne sur l'instance sans précision d'un identifiant particulier identifiant;
+  public List<ArtisteDto> listeArtistesDto()  {//Il nya pas de valeur à récupérer ici la valeur
+    // return la liste des artistes
+    ArtisteDao artisteDAo = new ArtisteDao();
+    //return artisteDAo.findAll();
+    List<Artiste> listeArtistes = artisteDAo.findAll(); //On récupère la liste des artistes dans la base de données
+    return listeArtistes.stream().map(Artiste::toDto).collect(Collectors.toList()); //On renvoie la liste des artistes au format JSON ou XML selon le type de contenu demandé par le client
+  }
+
 
 
   //Méthode UPDATE - Modifie les attributs d'un artiste s'il existe, il faut le paramètres ID dans la partie 
