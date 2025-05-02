@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * La classe Personne est une classe de base qui contient des informations communes
- * sur une personne, telles que le nom et le prénom. Elle est annotée avec
+ * sur une personne, telles que le nom, le prénom, l'email. Elle est annotée avec
  * @MappedSuperclass, ce qui signifie qu'elle ne sera pas directement persistée
  * en tant qu'entité dans la base de données, mais ses attributs seront hérités
  * par les autres classes d'entités.

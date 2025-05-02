@@ -7,9 +7,12 @@ import jakarta.persistence.ManyToMany;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import fr.istic.taa.jaxrs.dto.ArtisteDto;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -58,5 +61,17 @@ public class Artiste implements Serializable {
 
     public void setConcerts(List<Concert> concerts) {
         this.concerts = concerts;
+    }
+
+    public ArtisteDto toDto(){
+        
+        ArtisteDto artisteDto = new ArtisteDto();
+
+        artisteDto.setId(this.getId());
+        artisteDto.setNomArtistique(this.getNomArtistique());
+        artisteDto.setGenreMusical(this.getGenreMusical());
+        artisteDto.setConcertsIds(this.getConcerts().stream().map(Concert::getId).collect(Collectors.toList()));
+
+        return artisteDto;
     }
 }

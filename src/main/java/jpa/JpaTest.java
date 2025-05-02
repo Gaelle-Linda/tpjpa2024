@@ -4,17 +4,16 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import fr.istic.taa.jaxrs.domain.Artiste;
+import fr.istic.taa.jaxrs.domain.Client;
+import fr.istic.taa.jaxrs.domain.Concert;
+import fr.istic.taa.jaxrs.domain.Organisateur;
+import fr.istic.taa.jaxrs.domain.Salle;
+import fr.istic.taa.jaxrs.domain.Ticket;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
-
-import models.Client;
-import models.Organisateur;
-import models.Artiste;
-import models.Concert;
-import models.Salle;
-import models.Ticket;
 
 public class JpaTest {
 
@@ -80,7 +79,7 @@ public class JpaTest {
 			manager.persist(salle); // Persiste la salle
 
 			// Création d'un concert
-			Concert concert = new Concert("Concert Rock", "Rock", LocalDate.of(2025, 6, 15), LocalTime.of(20, 0), LocalTime.of(22, 0), 200);
+			Concert concert = new Concert();
 			concert.setOrganisateur(organisateur); // Associe l'organisateur au concert
 			concert.setSalle(salle); // Associe la salle au concert
 			concert.setArtistes(List.of(artiste1, artiste2)); // Associe les artistes au concert
