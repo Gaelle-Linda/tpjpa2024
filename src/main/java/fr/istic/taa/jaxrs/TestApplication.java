@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import fr.istic.taa.jaxrs.rest.ArtisteResource;
+import fr.istic.taa.jaxrs.rest.OrganisateurRessource;
 import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
@@ -35,6 +36,7 @@ public class TestApplication extends Application {
 
         clazzes.add(OpenApiResource.class);
         clazzes.add(ArtisteResource.class);
+        clazzes.add(OrganisateurRessource.class);
 //        clazzes.add(AcceptHeaderOpenApiResource.class);
          
 

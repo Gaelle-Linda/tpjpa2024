@@ -60,7 +60,11 @@ public class ArtisteResource {//ArtisteRessource est un ensemble de routes(URL p
   }
 
 
-
+//Avec le code précédent, on a vu que la liste de chaque artiste contient la liste de ses concerts de ses concerts a
+//avec tous les champs concernés ce qui nous générait des boucles la méthode artiste toDto au lieu de considérer les concerts entierements, 
+// on ne récupère que les id des concerts associés à chaque artiste d'ou on aura plus de boucles 
+//.On change la route cidessous en "/dto" pour ne pas avoir de conflit avec la méthode listeArtistes() qui affiche la liste des artistes
+  //Méthode GET - Récupérer la liste des artistes au format DTO (Data Transfer Object)
   @GET //pour demander une ressource Méthode: On veut retourner la liste des artistes
   @Path("/dto") // (localhost:8080/artiste/) on se positionne sur l'instance sans précision d'un identifiant particulier identifiant;
   public List<ArtisteDto> listeArtistesDto()  {//Il nya pas de valeur à récupérer ici la valeur
@@ -68,6 +72,7 @@ public class ArtisteResource {//ArtisteRessource est un ensemble de routes(URL p
     ArtisteDao artisteDAo = new ArtisteDao();
     //return artisteDAo.findAll();
     List<Artiste> listeArtistes = artisteDAo.findAll(); //On récupère la liste des artistes dans la base de données
+    
     return listeArtistes.stream().map(Artiste::toDto).collect(Collectors.toList()); //On renvoie la liste des artistes au format JSON ou XML selon le type de contenu demandé par le client
   }
 
@@ -144,6 +149,27 @@ public class ArtisteResource {//ArtisteRessource est un ensemble de routes(URL p
     artisteDao.deleteById(artisteId);
 
     return Response.ok("Artiste supprimé avec succès").build();
+  }
+
+  //Méthode POST - Ajouter un nouvel artiste
+  @POST //Pour soumetre des données aux serveur pour traitement ou pour sauvegarde dans la BD
+  @Consumes("application/json") //Consomme des données sous format json uniquement
+  @Path("/dto")
+  public Response addArtisteDto(
+          //@Parameter(description = "...") → Swagger annotation (OpenAPI) pour documenter l'API.
+          @Parameter(description = "Artite object that needs to be added to the store", required = true) ArtisteDto artisteDto) {
+    // add artiste, ajouter l'artiste dans la BD
+    ArtisteDao artistDao = new ArtisteDao();
+
+    Artiste artiste = new Artiste(); // Créer une nouvelle instance d'Artiste
+    artiste.setNomArtistique(artisteDto.getNomArtistique()); // Mettre à jour le nom artistique
+    artiste.setGenreMusical(artisteDto.getGenreMusical()); // Mettre à jour le genre musical
+    // On ne gère pas les concerts ici, mais on pourrait le faire si nécessaire
+  
+
+    artistDao.save(artiste);
+
+    return Response.ok().entity("SUCCESS").build(); //Retourne une réponse HTTP 200 avec le message "SUCCESS"
   }
 
 

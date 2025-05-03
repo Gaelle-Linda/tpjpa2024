@@ -20,7 +20,7 @@ public class Artiste implements Serializable {
     private Long id;
     private String nomArtistique;
     private String genreMusical;
-    private List<Concert> concerts;
+    private List<Concert> concerts = null;
 
     public Artiste() {}
 
@@ -70,7 +70,11 @@ public class Artiste implements Serializable {
         artisteDto.setId(this.getId());
         artisteDto.setNomArtistique(this.getNomArtistique());
         artisteDto.setGenreMusical(this.getGenreMusical());
-        artisteDto.setConcertsIds(this.getConcerts().stream().map(Concert::getId).collect(Collectors.toList()));
+        if (this.getConcerts() != null) {
+            
+            
+            artisteDto.setConcertsIds(this.getConcerts().stream().map(Concert::getId).collect(Collectors.toList()));
+        }
 
         return artisteDto;
     }
