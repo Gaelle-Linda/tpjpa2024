@@ -57,6 +57,29 @@ public List<OrganisateurDto> listeOrganisateurDto()  {//Il nya pas de valeur à 
     return listeOrganisateurs.stream().map(Organisateur::toDto).collect(Collectors.toList()); //On renvoie la liste des organisateurs au format JSON ou XML selon le type de contenu demandé par le client
 }
 
+  //Méthode POST - Ajouter un nouvel organisateur
+  @POST //Pour soumetre des données aux serveur pour traitement ou pour sauvegarde dans la BD
+  @Consumes("application/json") //Consomme des données sous format json uniquement
+  @Path("/dto")
+  public Response addOrganisateurDto(
+          //@Parameter(description = "...") → Swagger annotation (OpenAPI) pour documenter l'API.
+          @Parameter(description = "Organisateur object that needs to be added to the store", required = true) OrganisateurDto organisateurDto) {
+    // add artiste, ajouter l'artiste dans la BD
+    OrganisateurDao organisateurDao = new OrganisateurDao();
 
+    Organisateur organisateur = new Organisateur(); // Créer une nouvelle instance d'Organisateur
+    organisateur.setNom(organisateurDto.getNom()); // Mettre à jour le nom
+    organisateur.setPrenom(organisateurDto.getPrenom()); // Mettre à jour le prénom
+    organisateur.setEmail(organisateurDto.getEmail()); // Mettre à jour l'email 
+    // On ne gère pas les concerts ici, mais on pourrait le faire si nécessaire
+    //organisateur.setConcerts(organisateurDto.getConcertsIds()); // Mettre à jour les concerts associés
+
+    // Enregistrer l'organisateur dans la base de données
+    organisateurDao.save(organisateur);
+
+    // Retourner une réponse HTTP 200 avec le message "SUCCESS"
+    // et l'ID de l'organisateur créé
+    return Response.ok().entity("SUCCESS").build(); //Retourne une réponse HTTP 200 avec le message "SUCCESS"
+  }
 
 }

@@ -45,9 +45,13 @@ public class Organisateur extends Personne implements Serializable {
         organisateurDto.setNom(this.getNom());
         organisateurDto.setPrenom(this.getPrenom());
         organisateurDto.setEmail(this.getEmail());
-        // Convertir la liste de concerts en une liste d'IDs
-        organisateurDto.setConcertsIds(this.getConcerts().stream().map(Concert::getId).collect(Collectors.toList()));
-
+        // Si la liste de concert est non null, Convertir la liste de concerts en une liste d'IDs, sinon la laisser null/liste vide
+        if (this.getConcerts() != null) {
+            
+            organisateurDto.setConcertsIds(this.getConcerts().stream().map(Concert::getId).collect(Collectors.toList()));
+        }
+        // Si l'organisateur n'a pas de concerts, on peut initialiser la liste à vide ou la laisser null 
+        
         return organisateurDto;
     }
 
