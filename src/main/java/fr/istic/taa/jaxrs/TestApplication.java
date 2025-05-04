@@ -19,6 +19,7 @@ package fr.istic.taa.jaxrs;
 import java.util.HashSet;
 import java.util.Set;
 
+import fr.istic.taa.jaxrs.filter.CORSFilter;
 import fr.istic.taa.jaxrs.rest.ArtisteResource;
 import fr.istic.taa.jaxrs.rest.OrganisateurRessource;
 import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
@@ -38,6 +39,8 @@ public class TestApplication extends Application {
         clazzes.add(ArtisteResource.class);
         clazzes.add(OrganisateurRessource.class);
 //        clazzes.add(AcceptHeaderOpenApiResource.class);
+
+        clazzes.add(CORSFilter.class);
          
 
         return clazzes;
