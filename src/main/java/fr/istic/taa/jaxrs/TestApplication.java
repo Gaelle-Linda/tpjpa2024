@@ -37,6 +37,7 @@ public class TestApplication extends Application {
         clazzes.add(OpenApiResource.class);
         clazzes.add(ArtisteResource.class);
         clazzes.add(OrganisateurRessource.class);
+        clazzes.add(CORSFilter.class);
 //        clazzes.add(AcceptHeaderOpenApiResource.class);
          
 
